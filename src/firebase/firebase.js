@@ -2,15 +2,13 @@ import firebase from 'firebase/app'
 import 'firebase/database'
 
 const config = {
-    apiKey: "AIzaSyDv3pNrCCdjyhBxeeOseSAxMzHaTFEup1Q",
-    authDomain: "notes-app-51f7c.firebaseapp.com",
-    databaseURL: "https://notes-app-51f7c.firebaseio.com",
-    projectId: "notes-app-51f7c",
-    storageBucket: "notes-app-51f7c.appspot.com",
-    messagingSenderId: "975064099740"
+    apiKey: "AIzaSyA-qIK6dsZFzEKwQF7jU-mJCkF9BL0AuZM",
+    authDomain: "chatapp-b9baf.firebaseapp.com",
+    databaseURL: "https://chatapp-b9baf.firebaseio.com",
+    projectId: "chatapp-b9baf",
+    storageBucket: "chatapp-b9baf.appspot.com",
+    messagingSenderId: "987363613178"
   };
-  firebase.initializeApp(config);
-
-  const database = firebase.database();  //assigns return value to database const
-
+  firebase.initializeApp(config); //assigns return value to database const
+  const database = firebase.database();
   export default database;

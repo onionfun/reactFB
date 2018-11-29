@@ -2,65 +2,7 @@ import React, { Component } from 'react';
 //import "semantic-ui-css/semantic.min.css"; //{ Input, List} from
 import './App.css';
 import { TextField, List, ListItem, ListItemText } from "@material-ui/core"
-// import WeatherContainer from './WeatherContainer';
-// import Login from './Login';
-// import Navi from './Navbar/Navbar';
-// import { Route, Switch } from 'react-router-dom';
-// import Profile from './Profile';
-//import firebase from 'firebase';
-import firebase from 'firebase/app';
-import 'firebase/database';
-import * as firebase from 'firebase';
-const database = firebase.database();
-
-
-// // Dark sky API key: 54027aaa136404819ab799aaa96235ce
-// // Google API key: AIzaSyBHLett8djBo62dDXj0EjCimF8Rd6E8cxg
-// class App extends Component {
-//   constructor(){
-//     super();
-//     this.state = {
-//       username: [],
-//       password: "",
-//       location: Number,
-//       loggedIn: false,
-//       id: "",
-//     }
-//   }
-//   handleInputs = (e) => {
-//     this.setState({
-//       [e.currentTarget.name]: e.currentTarget.value
-//     })
-//   }
-
-//   submitRegistration = async (e) => {
-//     e.preventDefault();
-//     console.log("GOT HERE")
-//     console.log(this.state);
-//     try{
-//       console.log("GOT HERE, TOO")
-//       const createUser = await fetch('http://localhost:8080/register', {
-//         method: 'POST',
-//         body: JSON.stringify(this.state),
-//         headers: {
-//           'Content-Type': 'application/json'
-//         } 
-//       });
-//       const parsedResponse = await createUser.json();
-//       console.log(parsedResponse, ' this is response')
-//         this.setState({
-//           loggedIn: true,
-//           // this isn't a real login - need to align it with the back-end to sort that out
-//           username: parsedResponse.username,
-//           location: parsedResponse.location,
-//           id: parsedResponse.id
-//         })
-//     }catch(err){
-//       console.log(err, " error")
-//     }
-//   }
-// }
-
+import database from './firebase/firebase';
 
 
 class App extends React.Component {
@@ -79,15 +21,7 @@ class App extends React.Component {
         // })
         // .then(()=console.log("first success"))
         // .catch(err => console.log('FB error', err))
-        const config = {
-            apiKey: "AIzaSyA-qIK6dsZFzEKwQF7jU-mJCkF9BL0AuZM",
-            authDomain: "chatapp-b9baf.firebaseapp.com",
-            databaseURL: "https://chatapp-b9baf.firebaseio.com",
-            projectId: "chatapp-b9baf",
-            storageBucket: "chatapp-b9baf.appspot.com",
-            messagingSenderId: "987363613178"
-          };
-          firebase.initializeApp(config);
+      
         
           //const database = firebase.database();  //assigns return value to database const
         
@@ -102,8 +36,8 @@ class App extends React.Component {
       }
   }
   writeMessageToDB = (message) =>{
-    firebase
-    .database()
+
+    database
     .ref("messages/")
     .push({
         text: message
@@ -111,8 +45,7 @@ class App extends React.Component {
 }
 
   getMessages=()=>{
-      let messageDB = firebase
-      .database
+      let messageDB = database
       .ref("messages/")
       .limitToLast(500)
       messageDB.on("value", snapshot =>{
@@ -128,7 +61,7 @@ class App extends React.Component {
 
     renderMessages = () => {
         return this.state.messages.map(message => (
-          <ListItem>
+          <ListItem key={message.id}>
             <ListItemText
               style={{ wordBreak: "break-word" }}
               primary={message.text}
@@ -137,7 +70,7 @@ class App extends React.Component {
         ))
       }
 
-    render=()=>{
+    render(){
       return (
         <div className="App">
           {/* <UserList />
@@ -148,7 +81,7 @@ class App extends React.Component {
           </List>
           <TextField 
           autoFocus={true}
-          multiLine={true}
+          multiline={true}
           fullWidth={true}
           rowsMax={3}
           placeholder="Type something"
