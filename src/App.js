@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import "semantic-ui-css/semantic.min.css"; //{ Input, List} from
 import './App.css';
-import { TextField, List, ListItem, ListItemText } from "@material-ui/core"
+import { TextField, ListItem, ListItemText } from "@material-ui/core"
 import database from './firebase/firebase';
 
 
@@ -71,14 +71,24 @@ class App extends React.Component {
       }
 
     render(){
+      const ChatBubble = (text, i, className) => {
+        const classes = `${className} chat-bubble`;
+        return (
+          <div key={`${className}-${i}`} class={`${className} chat-bubble`}>
+            <span class="chat-content">{text}</span>
+          </div>
+        );
+      };
+
+      const chat = this.state.messages.map((e, index) =>
+          ChatBubble(e.text, index, e.user)
+        );
       return (
         <div className="App">
-          {/* <UserList />
-          <ChatHistory />
-          <SendMessage /> */}
-          <List>
-                  {this.renderMessages()}
-          </List>
+        <h1>Welcome to Skynet Chatbot</h1>
+            <div className="chat-window">
+              <div class="conversation-view">{chat}</div>
+              <div className="message-box">
           <TextField 
           autoFocus={true}
           multiline={true}
@@ -91,8 +101,8 @@ class App extends React.Component {
           style={{ width: "98vw", overflow: "hidden" }}
           />
           <span ref={el => (this.bottomSpan = el)} />
-
-          
+            </div>
+          </div>
        </div>
       )
     }
